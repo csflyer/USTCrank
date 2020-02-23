@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if users %}
+        <div>
+            <table class="table">
+                <tr>
+                    <td>学院</td>
+                    <td>所报专业</td>
+                    <td>准考证号</td>
+                    <td>{{ users[0].subject1_code }}</td>
+                    <td>{{ users[0].subject2_code }}</td>
+                    <td>{{ users[0].subject3_code }}</td>
+                    <td>{{ users[0].subject4_code }}</td>
+                    <td>去政治后总分</td>
+                    <td>总分</td>
+                    <td>{{ head }}</td>
+                </tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.college }}</td>
+                        <td>{{ user.major }}</td>
+                        <td>{{ user.kaohao }}</td>
+                        <td>{{ user.subject1_score }}</td>
+                        <td>{{ user.subject2_score }}</td>
+                        <td>{{ user.subject3_score }}</td>
+                        <td>{{ user.subject4_score }}</td>
+                        <td>{{ user.net_score }}</td>
+                        <td>{{ user.total_score }}</td>
+                        <td>{{ loop.index }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

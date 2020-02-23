@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import "_wtf.html" as wtf %}
+
+{% block title %}{{ form.title }}{% endblock %}
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="col-md-offset-5 col-md-2">
+    {{ wtf.quick_form(form) }}
+</div>
+{% endblock %}
