@@ -5,9 +5,24 @@ import requests
 from urllib.parse import quote
 from bs4 import BeautifulSoup
 from ..models import User
+from datetime import datetime
+from functools import wraps
 
+def TimeConsume():
+    def decorator(func):
+        @wraps(func)
+        def wrap(*args, **kwargs):
+            start = datetime.now()
+            print(func.__name__, 'start')
+            result = func(*args, **kwargs)
+            end = datetime.now()
+            print(func.__name__, "运行耗时:", end-start)
+            return result
+        return wrap
+    return decorator
 
 @main_view.route('/', methods=['GET', 'POST'])
+@TimeConsume()
 def main():
     form = LoginForm()
     if (form.validate_on_submit()):
@@ -39,12 +54,14 @@ def main():
         return render_template('form.html', form=form)
 
 
+@TimeConsume()
 def get_post_data(form):
     post_data = "zjhm=" + form.id.data + "&xm=" + quote(form.name.data) + "&code=" + form.code.data
     return post_data
 
 
 # 从html爬取考生信息及分数
+@TimeConsume()
 def parse_html_data(html):
     bs = BeautifulSoup(html, 'html.parser')
     base_info = bs.select('.info-phone')[0].contents[1].contents[1].contents
@@ -67,19 +84,28 @@ def parse_html_data(html):
 
 
 @main_view.route('/captcha')
+@TimeConsume()
 def get_validate_image():
     url = 'http://yzb2.ustc.edu.cn/api/captcha'
     r = requests.get(url)
     return r.content
 
 
-@main_view.route('/ranking_total_score/<major>')
-def total_ranking(major):
-    users = User.query.filter_by(major=major).order_by(User.total_score).all()
+@main_view.route('/ranking_total_score/<college>/<major>')
+@TimeConsume()
+def total_ranking(college, major):
+    start = datetime.now()
+    users = User.query.filter_by(college=college, major=major).order_by(User.total_score.desc()).all()
+    end = datetime.now()
+    print("查询" + str(len(users)) + "条数据用时:", end - start)
     return render_template("ranking.html", users=users, head='按总分排名')
 
 
-@main_view.route('/ranking_net_score/<major>')
-def net_ranking(major):
-    users = User.query.filter_by(major=major).order_by(User.net_score).all()
+@main_view.route('/ranking_net_score/<college>/<major>')
+@TimeConsume()
+def net_ranking(college, major):
+    start = datetime.now()
+    users = User.query.filter_by(college=college, major=major).order_by(User.net_score.desc()).all()
+    end = datetime.now()
+    print("查询" + str(len(users)) + "条数据用时:", end - start)
     return render_template("ranking.html", users=users, head='除去政治后成绩排名')

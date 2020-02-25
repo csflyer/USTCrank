@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <div style="text-align: center">
-            <a href="/ranking_total_score/{{ user.major }}" target="_blank">查看所报专业排名(按总分)</a>
-            <a  style="margin-left: 10px" href="/ranking_net_score/{{ user.major }}" target="_blank">查看所报专业排名(按除政治后总分)</a>
+            <a href="/ranking_total_score/{{ user.college }}/{{ user.major }}" target="_blank">查看所报专业排名(按总分)</a>
+            <a  style="margin-left: 10px" href="/ranking_net_score/{{ user.college}}/{{ user.major }}" target="_blank">查看所报专业排名(按除政治后总分)</a>
     </div>
 <div>
     <table class="table">

@@ -8,7 +8,7 @@ bootstrap =  Bootstrap()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///d:/temp.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ubuntu/USTCrank/scores.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
     app.config['SECRET_KEY'] = 'USTC'
 

@@ -3,10 +3,10 @@ from sqlalchemy.exc import IntegrityError
 
 
 class User(db.Model):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     kaohao = db.Column(db.String(18), unique=True, primary_key=True)
-    college = db.Column(db.String(32))
+    college = db.Column(db.String(32), index=True)
     major = db.Column(db.String(64), index=True)
     subject1_code = db.Column(db.String(64))
     subject1_score = db.Column(db.INTEGER)
@@ -16,8 +16,8 @@ class User(db.Model):
     subject3_score = db.Column(db.INTEGER)
     subject4_code = db.Column(db.String(64))
     subject4_score = db.Column(db.INTEGER)
-    net_score = db.Column(db.INTEGER, index=True)
-    total_score = db.Column(db.INTEGER, index=True)
+    net_score = db.Column(db.INTEGER)
+    total_score = db.Column(db.INTEGER)
 
     @staticmethod
     def insert_new(info_list):
@@ -42,6 +42,7 @@ class User(db.Model):
         db.session.add(user)
         try:
             db.session.commit()
+            return user
         except IntegrityError:
             db.session.rollback()
             return None

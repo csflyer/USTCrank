@@ -12,4 +12,10 @@
 <div class="col-md-offset-5 col-md-2">
     {{ wtf.quick_form(form) }}
 </div>
+<script>
+    var img = document.getElementById("validate_img")
+    img.onclick = (e) => {
+        img.src = "/captcha?v=" + Math.random();
+    }
+</script>
 {% endblock %}
