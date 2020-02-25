@@ -31,6 +31,7 @@ def main():
             return render_template('score.html', user = user, major=user.major)
         post_url = 'http://yzb2.ustc.edu.cn/cjcx'
         post_data = {
+            "ksbh" : form.kaohao.data,
             "zjhm" : form.id.data,
             "xm" : form.name.data,
             "code" : form.code.data
