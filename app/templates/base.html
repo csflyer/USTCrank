@@ -2,8 +2,24 @@
 {% block title %}USTC 2020年考研初试成绩与排名查询{% endblock %}
 
 {% block styles %}
-    {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+<link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    #code-change{
+        border: none;
+        background-color: transparent;
+        padding-right: 0px;
+    }
+    #validate_img{
+        height: 34px;
+        margin-top: -6px;
+    }
+    #head{
+        margin-top: 3%;
+    }
+    body{
+        background: beige;
+    }
+</style>
 {% endblock %}
 
 {% block body %}

@@ -3,10 +3,6 @@
 
 {% block title %}{{ form.title }}{% endblock %}
 
-{% block styles %}
-{{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-{% endblock %}
 
 {% block content %}
 <div class="col-md-offset-5 col-md-2">
