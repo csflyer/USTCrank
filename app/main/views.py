@@ -95,18 +95,24 @@ def get_validate_image():
 @main_view.route('/ranking_total_score/<college>/<major>')
 @TimeConsume()
 def total_ranking(college, major):
-    start = datetime.now()
-    users = User.query.filter_by(college=college, major=major).order_by(User.total_score.desc()).all()
-    end = datetime.now()
-    print("查询" + str(len(users)) + "条数据用时:", end - start)
-    return render_template("ranking.html", users=users, head='按总分排名')
+    page = request.args.get('page', 1, type=int)
+    pagination = User.query.filter_by(college=college, major=major).order_by(User.total_score.desc()).paginate(
+        page, per_page=current_app.config["USERS_PER_PAGE"], error_out=False
+    )
+    users = pagination.items
+    return render_template("ranking.html", users=users, pagination=pagination,
+                           head='按总分排名', is_total_ranking=True,
+                           USERS_PER_PAGE=current_app.config["USERS_PER_PAGE"])
 
 
 @main_view.route('/ranking_net_score/<college>/<major>')
 @TimeConsume()
 def net_ranking(college, major):
-    start = datetime.now()
-    users = User.query.filter_by(college=college, major=major).order_by(User.net_score.desc()).all()
-    end = datetime.now()
-    print("查询" + str(len(users)) + "条数据用时:", end - start)
-    return render_template("ranking.html", users=users, head='除去政治后成绩排名')
+    page = request.args.get('page', 1, type=int)
+    pagination = User.query.filter_by(college=college, major=major).order_by(User.net_score.desc()).paginate(
+        page, per_page=current_app.config["USERS_PER_PAGE"], error_out=False
+    )
+    users = pagination.items
+    return render_template("ranking.html", users=users, pagination=pagination,
+                           head='除去政治后成绩排名', is_total_ranking=False,
+                           USERS_PER_PAGE=current_app.config["USERS_PER_PAGE"])
