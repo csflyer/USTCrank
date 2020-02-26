@@ -8,7 +8,7 @@
             {% if is_total_ranking %}
                 {{ wtf.quick_pagination(pagination, "main_view.total_ranking", college=users[0].college, major=users[0].major) }}
             {% else %}
-                {{ wtf.qucik_paination(pagination, "main_view.net_ranking", college=users[0].college, major=users[0].major) }}
+                {{ wtf.quick_pagination(pagination, "main_view.net_ranking", college=users[0].college, major=users[0].major) }}
             {% endif %}
         </div>
         <table class="table">
@@ -31,7 +31,7 @@
                         <td>{{ user.subject4_score }}</td>
                         <td>{{ user.net_score }}</td>
                         <td>{{ user.total_score }}</td>
-                        <td>{{ loop.index }}</td>
+                        <td>{{ (pagination.page - 1) * USERS_PER_PAGE + loop.index }}</td>
                     </tr>
                 {% endfor %}
             </table>

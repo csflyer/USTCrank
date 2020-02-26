@@ -1,5 +1,5 @@
 from . import main_view
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request, current_app
 from .forms import LoginForm
 import requests
 from urllib.parse import quote
@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from ..models import User
 from datetime import datetime
 from functools import wraps
+
 
 def TimeConsume():
     def decorator(func):
@@ -26,7 +27,10 @@ def TimeConsume():
 def main():
     form = LoginForm()
     if (form.validate_on_submit()):
+        start = datetime.now()
         user = User.query.get(form.kaohao.data)
+        end = datetime.now()
+        print("查询单个数据用时:", end - start)
         if user is not None:
             return render_template('score.html', user = user, major=user.major)
         post_url = 'http://yzb2.ustc.edu.cn/cjcx'
@@ -36,7 +40,10 @@ def main():
             "xm" : form.name.data,
             "code" : form.code.data
         }
+        start = datetime.now()
         r = requests.post(post_url, data=post_data)
+        end = datetime.now()
+        print("抓取成绩耗时:", end - start)
         if "未查询到相关记录" in r.text:
             flash("未查询到相关记录,请仔细检查或稍后再试")
             return redirect(url_for("main_view.main"))
@@ -46,7 +53,10 @@ def main():
         if "result" not in r.text:
             flash("成绩抓取失败，请重新输入或稍后再试")
             return redirect(url_for("main_view.main"))
+        start = datetime.now()
         user = User.insert_new(parse_html_data(r.text))
+        end = datetime.now()
+        print("插入数据耗时:", end - start)
         if user is None:
             flash("数据插入失败，请联系管理员")
             return redirect(url_for("main_view.main"))
@@ -88,7 +98,10 @@ def parse_html_data(html):
 @TimeConsume()
 def get_validate_image():
     url = 'http://yzb2.ustc.edu.cn/api/captcha'
+    start = datetime.now()
     r = requests.get(url)
+    end = datetime.now()
+    print("获取图片耗时:", end - start)
     return r.content
 
 
