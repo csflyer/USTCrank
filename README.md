@@ -1,5 +1,6 @@
 ## 1. USTCrank
-    基于python3, Flask, BeautifulSoup, 用于统计 USTC 考研初试的成绩排名
+    基于python3+Flask+BeautifulSoup, 用于统计 USTC 考研初试的成绩排名，报考 USTC 的所有同学均可登录查分，可查看本专业排名，人数越多，数据越准确
+    网站仅保存分数相关信息，无需担心泄露隐私~
 
 ## 2. 本地运行准备
     1. 修改 app/__init__.py 中的数据库路径 即 app.config['SQLALCHEMY_DATABASE_URI']后面的值，应为'sqlite:///路径'.
