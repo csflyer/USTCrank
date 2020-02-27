@@ -22,6 +22,7 @@ def TimeConsume():
         return wrap
     return decorator
 
+
 @main_view.route('/', methods=['GET', 'POST'])
 @TimeConsume()
 def main():
@@ -32,7 +33,7 @@ def main():
         end = datetime.now()
         print("查询单个数据用时:", end - start)
         if user is not None:
-            return render_template('score.html', user = user, major=user.major)
+            return redirect(url_for("main_view.score", kaohao=user.kaohao))
         post_url = 'http://yzb2.ustc.edu.cn/cjcx'
         post_data = {
             "ksbh" : form.kaohao.data,
@@ -60,9 +61,20 @@ def main():
         if user is None:
             flash("数据插入失败，请联系管理员")
             return redirect(url_for("main_view.main"))
-        return render_template('score.html', user=user, major=user.major)
+        return redirect(url_for("main_view.score", kaohao=user.kaohao))
     else:
         return render_template('form.html', form=form)
+
+
+@main_view.route("/score/<kaohao>")
+@TimeConsume()
+def score(kaohao):
+    user = User.query.get(kaohao)
+    if user is None:
+        flash("无此记录，请检查准考证号")
+        return redirect(url_for("main_view.main"))
+    else:
+        return render_template('score.html', user=user, major=user.major)
 
 
 @TimeConsume()
