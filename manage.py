@@ -8,6 +8,7 @@ from werkzeug.exceptions import InternalServerError
 app = create_app()
 manager = Manager(app)
 
+# 处理 500 内部错误，用于调试
 @app.errorhandler(InternalServerError)
 def internal_server_error(e):
     print(e.code)
@@ -15,16 +16,15 @@ def internal_server_error(e):
     print(e.description)
     return "Internal Server Error"
 
-@app.errorhandler(404)
-def not_found(e):
-    return "URL Not Found"
 
 def make_shell_context():
     return dict(app=app, db=db, User=User)
 
+
 @manager.command
 def run():
     app.run(port=80)
+
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
 

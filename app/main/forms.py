@@ -2,6 +2,7 @@ from wtforms.fields import StringField, SubmitField
 from wtforms.validators import Length, DataRequired
 from flask_wtf import FlaskForm
 
+# 验证码字段
 class VerifyCodeField(StringField):
     def __call__(self, *args, **kwargs):
         html = super(VerifyCodeField, self).__call__(*args, **kwargs)
@@ -10,6 +11,8 @@ class VerifyCodeField(StringField):
                    '</span>'
         return html + addition
 
+
+# 登录表单
 class LoginForm(FlaskForm):
     kaohao = StringField('准考证号', validators=[DataRequired(), Length(15, 15)])
     name = StringField('考生姓名', validators=[DataRequired(), Length(1, 5)])

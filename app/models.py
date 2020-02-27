@@ -1,7 +1,7 @@
 from . import db
 from sqlalchemy.exc import IntegrityError
 
-
+# ORM 数据类
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -16,8 +16,8 @@ class User(db.Model):
     subject3_score = db.Column(db.INTEGER)
     subject4_code = db.Column(db.String(64))
     subject4_score = db.Column(db.INTEGER)
-    net_score = db.Column(db.INTEGER)
-    total_score = db.Column(db.INTEGER)
+    net_score = db.Column(db.INTEGER, index=True)
+    total_score = db.Column(db.INTEGER, index=True)
 
     @staticmethod
     def insert_new(info_list):
@@ -36,9 +36,6 @@ class User(db.Model):
                     subject4_score = fourth_score,
                     net_score= second_score + third_score + fourth_score,
                     total_score = total_score)
-        result = User.query.get(user.kaohao)
-        if result is not None:
-            return result
         db.session.add(user)
         try:
             db.session.commit()
