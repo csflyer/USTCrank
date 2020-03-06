@@ -14,6 +14,7 @@ class VerifyCodeField(StringField):
 
 # 登录表单
 class LoginForm(FlaskForm):
+    title = "登陆"
     kaohao = StringField('准考证号', validators=[DataRequired(), Length(15, 15)])
     name = StringField('考生姓名', validators=[DataRequired(), Length(1, 5)])
     id = StringField('身份证号', validators=[DataRequired(), Length(18, 18)])
