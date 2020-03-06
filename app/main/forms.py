@@ -9,7 +9,7 @@ class VerifyCodeField(StringField):
         addition = '<span id="code-change" class="input-group-addon">' \
                    '<img id="validate_img" src="/static/captcha.jpg">' \
                    '</span>'
-        return html + addition
+        return "<div class='input-group'>" + html + addition + "</div>"
 
 
 # 登录表单
