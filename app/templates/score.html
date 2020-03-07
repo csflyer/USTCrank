@@ -1,32 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-<div style="text-align: center; margin-top: -20px; margin-bottom: 10px;" class="col-md-4 col-md-offset-4">
-    <strong><a style="font-size: 16px" href="/ranking_total_score/{{ user.college }}/{{ user.major }}" target="_blank">查看所报专业排名(按总分)</a>
-    <a  style="margin-left: 10px; font-size: 16px" href="/ranking_net_score/{{ user.college }}/{{ user.major }}" target="_blank">查看所报专业排名(按除政治后总分)</a></strong>
-</div>
+    <div style="text-align: center; margin-top: -10px; margin-bottom: 10px;" class="col-md-4 col-md-offset-4">
+            <strong><a style="font-size: 16px" href="{{ url_for('main_view.ranking_total', college=current_user.college, major=current_user.major)}}">查看所报专业排名(按总分)</a>
+            <a  style="margin-left: 10px; font-size: 16px" href="{{ url_for('main_view.ranking_net', college=current_user.college, major=current_user.major)}}">查看所报专业排名(按除政治后总分)</a></strong>
+    </div>
 <div class="col-md-8 col-md-offset-2">
     <table class="table">
         <tr>
             <td>准考证号</td>
             <td>学院</td>
             <td>专业</td>
-            <td>{{ user.subject1_code }}</td>
-            <td>{{ user.subject2_code }}</td>
-            <td>{{ user.subject3_code }}</td>
-            <td>{{ user.subject4_code }}</td>
+            <td>{{ current_user.subject1_code }}</td>
+            <td>{{ current_user.subject2_code }}</td>
+            <td>{{ current_user.subject3_code }}</td>
+            <td>{{ current_user.subject4_code }}</td>
             <td>除政治后总分</td>
             <td>总分</td>
         </tr>
         <tr>
-            <td>{{ user.kaohao }}</td>
-            <td>{{ user.college }}</td>
-            <td>{{ user.major }}</td>
-            <td>{{ user.subject1_score }}</td>
-            <td>{{ user.subject2_score }}</td>
-            <td>{{ user.subject3_score }}</td>
-            <td>{{ user.subject4_score }}</td>
-            <td>{{ user.net_score }}</td>
-            <td>{{ user.total_score }}</td>
+            <td>{{ current_user.kaohao }}</td>
+            <td>{{ current_user.college }}</td>
+            <td>{{ current_user.major }}</td>
+            <td>{{ current_user.subject1_score }}</td>
+            <td>{{ current_user.subject2_score }}</td>
+            <td>{{ current_user.subject3_score }}</td>
+            <td>{{ current_user.subject4_score }}</td>
+            <td>{{ current_user.net_score }}</td>
+            <td>{{ current_user.total_score }}</td>
         </tr>
     </table>
 </div>

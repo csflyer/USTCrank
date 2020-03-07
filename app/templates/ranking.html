@@ -1,27 +1,28 @@
 {% extends "base.html" %}
+{% import "_pagination.html" as wtf %}
 
 {% block content %}
     {% if users %}
-    <div class="col-md-8 col-md-offset-2" style="text-align: center">
-        <h3> {{ users[0].college }} {{ users[0].major }} 成绩排名</h3>
-        <div>
-            {% if is_total_ranking %}
-                {{ wtf.quick_pagination(pagination, "main_view.total_ranking", college=users[0].college, major=users[0].major) }}
-            {% else %}
-                {{ wtf.quick_pagination(pagination, "main_view.net_ranking", college=users[0].college, major=users[0].major) }}
-            {% endif %}
-        </div>
-        <table class="table">
-            <tr>
-                <td>准考证号</td>
-                <td>{{ users[0].subject1_code }}</td>
-                <td>{{ users[0].subject2_code }}</td>
-                <td>{{ users[0].subject3_code }}</td>
-                <td>{{ users[0].subject4_code }}</td>
-                <td>去政治后总分</td>
-                <td>总分</td>
-                <td>{{ head }}</td>
-            </tr>
+        <div class="col-md-8 col-md-offset-2" style="text-align: center">
+            <h3> {{ users[0].college }} {{ users[0].major }} 成绩排名</h3>
+            <div>
+                {% if is_total_ranking %}
+                    {{ wtf.quick_pagination(pagination, "main_view.ranking_total", college=users[0].college, major=users[0].major) }}
+                {% else %}
+                    {{ wtf.qucik_paination(pagination, "main_view.ranking_net", college=users[0].college, major=users[0].major) }}
+                {% endif %}
+            </div>
+            <table class="table">
+                <tr>
+                    <td>准考证号</td>
+                    <td>{{ users[0].subject1_code }}</td>
+                    <td>{{ users[0].subject2_code }}</td>
+                    <td>{{ users[0].subject3_code }}</td>
+                    <td>{{ users[0].subject4_code }}</td>
+                    <td>去政治后总分</td>
+                    <td>总分</td>
+                    <td>{{ head }}</td>
+                </tr>
                 {% for user in users %}
                     <tr>
                         <td>{{ user.kaohao }}</td>

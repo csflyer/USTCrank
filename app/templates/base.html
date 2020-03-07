@@ -1,25 +1,36 @@
 {% extends "bootstrap/base.html" %}
-{% block title %}USTC 2020年考研初试成绩与排名查询{% endblock %}
+
+{% block title %}
+   {% if title  %}
+        {{ title }} - USTC 2020年考研初试成绩与排名查询
+   {% else %}
+        USTC 2020年考研初试成绩与排名查询
+    {% endif %}
+{% endblock %}
+
 
 {% block styles %}
-<link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-<style>
-    #code-change{
-        border: none;
-        background-color: transparent;
-        padding-right: 0px;
-    }
-    #validate_img{
-        height: 34px;
-        margin-top: -6px;
-    }
-    #head{
-        margin-top: 3%;
-    }
-    body{
-        background: beige;
-    }
-</style>
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #code-change{
+            border: none;
+            background-color: transparent;
+            padding-right: 0px;
+        }
+        #validate_img{
+            height: 34px;
+            margin-top: -6px;
+        }
+        #head{
+            margin-top: 3%;
+        }
+        body{
+            background: beige;
+        }
+        .margin_left_10{
+            margin-left: 10px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -32,61 +43,79 @@
         <span>4. 仅供学习交流使用，使用造成的一切不良后果由用户承担，与作者无关
         <a href="https://github.com/csflyer/USTCrank" target="_blank">项目Github地址</a></span></span>
     </p>
-</div>
+    {% if current_user.is_authenticated %}
 <div class="col-md-6 col-md-offset-3">
-    <table class="table" style="margin-top: 10px">
+    <table class="table" style="margin-top: 10px; margin-bottom: 10px">
         <tr>
             <td>总分排名</td>
             <td>
-                <a href="/ranking_total_score/225%E8%BD%AF%E4%BB%B6%E5%AD%A6%E9%99%A2/085400%E7%94%B5%E5%AD%90%E4%BF%A1%E6%81%AF" target="_blank">软件学院专硕</a>
+                <a href="{{ url_for('main_view.ranking_total', college='225软件学院', major='085400电子信息')}}">软件学院专硕</a>
             </td>
             <td>
-                <a href="/ranking_total_score/225%E8%BD%AF%E4%BB%B6%E5%AD%A6%E9%99%A2/083500%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B" target="_blank">软件学院学硕</a>
+                <a href="{{ url_for('main_view.ranking_total', college='225软件学院', major='083500软件工程')}}">软件学院学硕</a>
             </td>
             <td>
-                <a href="/ranking_total_score/215%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF%E5%AD%A6%E9%99%A2/085400%E7%94%B5%E5%AD%90%E4%BF%A1%E6%81%AF" target="_blank">计院专硕</a>
+                <a href="{{ url_for('main_view.ranking_total', college='215计算机科学与技术学院', major='085400电子信息')}}">计院专硕</a>
             </td>
             <td>
-                <a href="/ranking_total_score/215%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF%E5%AD%A6%E9%99%A2/081200%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF" target="_blank">计院学硕</a>
+                <a href="{{ url_for('main_view.ranking_total', college='215计算机科学与技术学院', major='081200计算机科学与技术')}}">计院学硕</a>
             </td>
             <td>
-                <a href="/ranking_total_score/218%E5%85%88%E8%BF%9B%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6%E9%99%A2/085400%E7%94%B5%E5%AD%90%E4%BF%A1%E6%81%AF" target="_blank">先进院专硕</a></td>
+                <a href="{{ url_for('main_view.ranking_total', college='218先进技术研究院', major='085400电子信息')}}">先进院专硕</a></td>
             <td>
-                <a href="/ranking_total_score/168%E7%A0%94%E7%A9%B6%E7%94%9F%E9%99%A2%E7%A7%91%E5%AD%A6%E5%B2%9B%E5%88%86%E9%99%A2/085400%E7%94%B5%E5%AD%90%E4%BF%A1%E6%81%AF" target="_blank">科学岛专硕</a>
+                <a href="{{ url_for('main_view.ranking_total', college='168研究生院科学岛分院', major='085400电子信息')}}">科学岛专硕</a>
             </td>
         </tr>
         <tr>
             <td>净分排名</td>
             <td>
-                <a href="/ranking_net_score/225%E8%BD%AF%E4%BB%B6%E5%AD%A6%E9%99%A2/085400%E7%94%B5%E5%AD%90%E4%BF%A1%E6%81%AF" target="_blank">软件学院专硕</a>
+                <a href="{{ url_for('main_view.ranking_net', college='225软件学院', major='085400电子信息')}}">软件学院专硕</a>
             </td>
             <td>
-                <a href="/ranking_net_score/225%E8%BD%AF%E4%BB%B6%E5%AD%A6%E9%99%A2/083500%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B" target="_blank">软件学院学硕</a>
+                <a href="{{ url_for('main_view.ranking_net', college='225软件学院', major='083500软件工程')}}">软件学院学硕</a>
             </td>
             <td>
-                <a href="/ranking_net_score/215%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF%E5%AD%A6%E9%99%A2/085400%E7%94%B5%E5%AD%90%E4%BF%A1%E6%81%AF" target="_blank">计院专硕</a>
+                <a href="{{ url_for('main_view.ranking_net', college='215计算机科学与技术学院', major='085400电子信息')}}">计院专硕</a>
             </td>
             <td>
-                <a href="/ranking_net_score/215%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF%E5%AD%A6%E9%99%A2/081200%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%8E%E6%8A%80%E6%9C%AF" target="_blank">计院学硕</a>
+                <a href="{{ url_for('main_view.ranking_net', college='215计算机科学与技术学院', major='081200计算机科学与技术')}}">计院学硕</a>
             </td>
             <td>
-                <a href="/ranking_net_score/218%E5%85%88%E8%BF%9B%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6%E9%99%A2/085400%E7%94%B5%E5%AD%90%E4%BF%A1%E6%81%AF" target="_blank">先进院专硕</a></td>
+                <a href="{{ url_for('main_view.ranking_net', college='218先进技术研究院', major='085400电子信息')}}">先进院专硕</a></td>
             <td>
-                <a href="/ranking_net_score/168%E7%A0%94%E7%A9%B6%E7%94%9F%E9%99%A2%E7%A7%91%E5%AD%A6%E5%B2%9B%E5%88%86%E9%99%A2/085400%E7%94%B5%E5%AD%90%E4%BF%A1%E6%81%AF" target="_blank">科学岛专硕</a>
+                <a href="{{ url_for('main_view.ranking_net', college='168研究生院科学岛分院', major='085400电子信息')}}">科学岛专硕</a>
             </td>
             </td>
         </tr>
     </table>
 </div>
+    {% endif %}
+    <div class="col-md-6 col-md-offset-3">
+        <p style="margin-top: 0px; font-size: 15px;text-align: center">
+            <a href="/">首页</a>
+            <a href="{{ url_for('main_view.main')}}" class="margin_left_10">注册查分</a>
+            <a href="{{ url_for('main_view.reset_password') }}" class="margin_left_10">
+                {% if current_user.is_authenticated %}修改查询密码
+                {% else %}找回查询密码
+                {% endif %}
+            </a>
+            <a href="{{ url_for('main_view.logout') }}" class="margin_left_10">退出登录</a>
+    </p></div>
 </div>
 <div>
-    <div  style="margin-top: 10px;" class="row col-md-2 col-md-offset-5">
+    <div style="margin-top: 10px;" class="row col-md-2 col-md-offset-5">
     {% with messages = get_flashed_messages(with_categories = True) %}
         {% if messages %}
             {% for category, message in messages %}
-            <div class="alert alert-danger">
-                {{ message }}
-            </div>
+                {% if category != "info" %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        {{ message }}
+                    </div>
+                {% endif %}
             {% endfor %}
         {% endif %}
     {% endwith %}
