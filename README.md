@@ -17,7 +17,7 @@
     3. 安装依赖包 运行 source venv/bin/activate 激活虚拟环境(后续操作均在虚拟环境下进行)， 再运行 pip install -r requirements/pip.txt 安装所有依赖
     4. 如第一次运行或未创建数据库，修改 app/__init__.py 中的数据库路径，再运行 python manage.py shell 然后输入 db.create_all() 创建数据库
     5. 使用 gunicorn 作为 web服务器， 使用 pip install gunicorn 安装 gunicorn
-    6. 运行 gunicorn --workers=32 --threads=25 -t 50 -b 0.0.0.0:5000 manage:app 即可启动站点, 具体参数请百度
+    6. 运行 gunicorn --workers=5 -b 0.0.0.0:80 manage:app 即可启动站点, 具体参数请百度
 
 ## 3. 声明
     本代码仅供学习交流，用户使用所造成的不良后果与作者无关
