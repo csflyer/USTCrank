@@ -10,18 +10,16 @@ from datetime import datetime
 from functools import wraps
 
 # 装饰器 用于调试 显示调用每个函数耗费时间
-def TimeConsume():
-    def decorator(func):
-        @wraps(func)
-        def wrap(*args, **kwargs):
-            start = datetime.now()
-            print(func.__name__, 'start')
-            result = func(*args, **kwargs)
-            end = datetime.now()
-            print(func.__name__, "运行耗时:", end-start)
-            return result
-        return wrap
-    return decorator
+def decorator(func):
+    @wraps(func)
+    def wrap(*args, **kwargs):
+        start = datetime.now()
+        print(func.__name__, 'start')
+        result = func(*args, **kwargs)
+        end = datetime.now()
+        print(func.__name__, "运行耗时:", end-start)
+        return result
+    return wrap
 
 # 装饰器 用于要登录才能访问的页面
 def login_required(func):
@@ -49,7 +47,7 @@ def login():
     form = LoginForm()
     if (form.validate_on_submit()):
         user = User.query.get(form.kaohao.data)
-        if user is None or form.password.data != user.password:
+        if user is None or not user.validate_password(form.password.data):
             flash("准考证号或密码错误!")
             return redirect(url_for("main_view.login"))
         login_user(user)
@@ -134,12 +132,6 @@ def scrawl_score(form):
 @login_required
 def score():
     return render_template('score.html')
-
-
-# 构造查分的 post 数据
-def get_post_data(form):
-    post_data = "zjhm=" + form.id.data + "&xm=" + quote(form.name.data) + "&code=" + form.code.data
-    return post_data
 
 
 # 从html爬取考生信息及分数

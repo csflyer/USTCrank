@@ -93,12 +93,12 @@
     <div class="col-md-6 col-md-offset-3">
         <p style="margin-top: 0px; font-size: 15px;text-align: center">
             <a href="/">首页</a>
-            <a href="{{ url_for('main_view.main')}}" class="margin_left_10">注册查分</a>
-            <a href="{{ url_for('main_view.reset_password') }}" class="margin_left_10">
-                {% if current_user.is_authenticated %}修改查询密码
-                {% else %}找回查询密码
-                {% endif %}
-            </a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('main_view.score')}}" class="margin_left_10">个人成绩</a>
+            {% else %}
+                <a href="{{ url_for('main_view.cjcx')}}" class="margin_left_10">注册查分</a>
+            {% endif %}
+            <a href="{{ url_for('main_view.reset_password') }}" class="margin_left_10">修改查询密码</a>
             <a href="{{ url_for('main_view.logout') }}" class="margin_left_10">退出登录</a>
     </p></div>
 </div>

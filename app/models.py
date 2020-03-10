@@ -1,6 +1,7 @@
 from . import db
 from sqlalchemy.exc import IntegrityError
 from . import login_manager
+from hashlib import md5
 
 
 @login_manager.user_loader
@@ -44,9 +45,10 @@ class User(db.Model):
         return False
 
     def change_password(self, password):
-        if self.password == password:
+        temp_password = User.hash_password(password)
+        if temp_password == self.password:
             return self
-        self.password = password
+        self.password = temp_password
         db.session.add(self)
         try:
             db.session.commit()
@@ -54,13 +56,20 @@ class User(db.Model):
         except IntegrityError:
             db.session.rollback()
             return None
+    
+    def validate_password(self, password):
+        return self.password == self.hash_password(password)
+
+    @staticmethod
+    def hash_password(password):
+        return md5((current_app.config['SECRET_KEY'] + password).encode(encoding='UTF-8')).hexdigest()
 
     @staticmethod
     def insert_new(info_list, password):
         (kaohao, college, major, first_name, first_score, second_name, second_score, third_name, third_score
          , fourth_name, fourth_score, total_score) = info_list
         user =  User(kaohao=kaohao,
-                     password=password,
+                     password=User.hash_password(password),
                     college = college,
                     major=major,
                     subject1_code = first_name,
