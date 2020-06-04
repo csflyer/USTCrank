@@ -45,7 +45,7 @@ def logout():
 @main_view.route("/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
-    if (form.validate_on_submit()):
+    if form.validate_on_submit():
         user = User.query.get(form.kaohao.data)
         if user is None or not user.validate_password(form.password.data):
             flash("准考证号或密码错误!")
@@ -90,7 +90,7 @@ def cjcx():
     if current_user.is_authenticated:
         return redirect(url_for("main_view.score"))
     form = CJCXForm()
-    if (form.validate_on_submit()):
+    if form.validate_on_submit():
         user = User.query.get(form.kaohao.data)
         if user is not None:
             flash("此准考证号已查过成绩，请直接登陆")
