@@ -1,4 +1,5 @@
 from . import db
+from flask import current_app
 from sqlalchemy.exc import IntegrityError
 from . import login_manager
 from hashlib import md5
@@ -11,7 +12,7 @@ def load_user(user_id):
 
 # ORM 数据类
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
 
     kaohao = db.Column(db.String(18), unique=True, primary_key=True)
     password = db.Column(db.String(20))
