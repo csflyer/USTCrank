@@ -8,6 +8,7 @@ from werkzeug.exceptions import InternalServerError
 app = create_app()
 manager = Manager(app)
 
+
 # 处理 500 内部错误，用于调试
 @app.errorhandler(InternalServerError)
 def internal_server_error(e):

@@ -1,20 +1,23 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
+from flask_mongoengine import MongoEngine
 from flask_login import LoginManager
 
-
-db = SQLAlchemy(use_native_unicode='utf-8')
-bootstrap =  Bootstrap()
+db = MongoEngine()
+bootstrap = Bootstrap()
 login_manager = LoginManager()
 login_manager.session_protection = 'basic'
 login_manager.login_view = 'main_view.main'
 
+
 def create_app():
     app = Flask(__name__)
-    # 数据库地址
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ubuntu/USTCrank/scores.db'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///d:/temp.db'
+    # mongo 数据库配置
+    app.config['MONGODB_SETTINGS'] = {
+        'db': 'users',
+        'host': '127.0.0.1',
+        'port': 27017
+    }
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
     # 表单 防CSRF
     app.config['SECRET_KEY'] = 'USTC'

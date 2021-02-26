@@ -3,11 +3,11 @@ from flask import render_template, flash, redirect, url_for, request, current_ap
 from flask_login import login_user, logout_user, current_user
 from .forms import CJCXForm, LoginForm, ResetPasswordForm, SimpleResetPwForm
 import requests
-from urllib.parse import quote
 from bs4 import BeautifulSoup
 from ..models import User
 from datetime import datetime
 from functools import wraps
+
 
 # 装饰器 用于调试 显示调用每个函数耗费时间
 def decorator(func):
@@ -21,6 +21,7 @@ def decorator(func):
         return result
     return wrap
 
+
 # 装饰器 用于要登录才能访问的页面
 def login_required(func):
     @wraps(func)
@@ -33,6 +34,7 @@ def login_required(func):
             return r
     return wrap
 
+
 # 退出登录
 @main_view.route("/logout")
 def logout():
@@ -41,12 +43,13 @@ def logout():
         logout_user()
     return redirect(url_for("main_view.login"))
 
+
 # 登录
 @main_view.route("/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.get(form.kaohao.data)
+        user = User.get(kaohao=form.kaohao.data)
         if user is None or not user.validate_password(form.password.data):
             flash("准考证号或密码错误!")
             return redirect(url_for("main_view.login"))
@@ -54,6 +57,7 @@ def login():
         return redirect(url_for("main_view.score"))
     else:
         return render_template("form.html", form=form)
+
 
 # 修改密码
 @main_view.route("/reset_password", methods=['GET', 'POST'])
@@ -74,7 +78,7 @@ def reset_password():
         if not isinstance(r, requests.Response):
             flash(r)
             return redirect(url_for("main_view.reset_password"))
-        user = User.query.get(form.kaohao.data)
+        user = User.get(form.kaohao.data)
         user = user.change_password(form.password.data)
         if user is None:
             flash("查询密码更改失败，请联系管理员")
@@ -84,6 +88,7 @@ def reset_password():
         return redirect(url_for("main_view.login"))
     return render_template("form.html", form=form)
 
+
 # 处理成绩查询请求
 @main_view.route('/cjcx', methods=['GET', 'POST'])
 def cjcx():
@@ -91,7 +96,7 @@ def cjcx():
         return redirect(url_for("main_view.score"))
     form = CJCXForm()
     if form.validate_on_submit():
-        user = User.query.get(form.kaohao.data)
+        user = User.get(form.kaohao.data)
         if user is not None:
             flash("此准考证号已查过成绩，请直接登陆")
             return redirect(url_for("main_view.login"))
@@ -107,6 +112,7 @@ def cjcx():
         return redirect(url_for("main_view.score"))
     else:
         return render_template('form.html', form=form)
+
 
 # 从 USTC网站上查询成绩
 def scrawl_score(form):
@@ -171,9 +177,7 @@ def get_validate_image():
 @login_required
 def ranking_total(college, major):
     page = request.args.get('page', 1, type=int)
-    pagination = User.query.filter_by(college=college, major=major).order_by(User.total_score.desc()).paginate(
-        page, per_page=current_app.config["USERS_PER_PAGE"], error_out=False
-    )
+    pagination = User.objects.get_ranking(college, major, "total_score", page, current_app.config["USERS_PER_PAGE"])
     users = pagination.items
     return render_template("ranking.html", users=users, pagination=pagination,
                            head='按总分排名', is_total_ranking=True,
@@ -185,9 +189,7 @@ def ranking_total(college, major):
 @login_required
 def ranking_net(college, major):
     page = request.args.get('page', 1, type=int)
-    pagination = User.query.filter_by(college=college, major=major).order_by(User.net_score.desc()).paginate(
-        page, per_page=current_app.config["USERS_PER_PAGE"], error_out=False
-    )
+    pagination = User.objects.get_ranking(college, major, "net_score", page, current_app.config["USERS_PER_PAGE"])
     users = pagination.items
     return render_template("ranking.html", users=users, pagination=pagination,
                            head='除去政治后成绩排名', is_total_ranking=False,

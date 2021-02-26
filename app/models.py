@@ -1,34 +1,51 @@
 from . import db
 from flask import current_app
-from sqlalchemy.exc import IntegrityError
+from flask_mongoengine import BaseQuerySet
 from . import login_manager
 from hashlib import md5
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(user_id)
+    return User.get(user_id)
 
 
+# 自定义的查询方式，用于输出排名与分页
+class CustomQuerySet(BaseQuerySet):
+
+    def get_ranking(self, college, major, order_field, page, per_page):
+        return self.filter(college=college, major=major).order_by("-" + order_field).paginate(page=page,
+                                                                                              per_page=per_page)
+给i他
 # ORM 数据类
-class User(db.Model):
-    __tablename__ = 'user'
+class User(db.Document):
+    __tablename__ = 'users'
+    # 注册上面自定义的查询方式
+    meta = {"queryset_class": CustomQuerySet}
 
-    kaohao = db.Column(db.String(18), unique=True, primary_key=True)
-    password = db.Column(db.String(20))
-    college = db.Column(db.String(32), index=True)
-    major = db.Column(db.String(64), index=True)
-    subject1_code = db.Column(db.String(64))
-    subject1_score = db.Column(db.INTEGER)
-    subject2_code = db.Column(db.String(64))
-    subject2_score = db.Column(db.INTEGER)
-    subject3_code = db.Column(db.String(64))
-    subject3_score = db.Column(db.INTEGER)
-    subject4_code = db.Column(db.String(64))
+    kaohao = db.StringField()
+    password = db.StringField()
+    college = db.StringField()
+    major = db.StringField()
+    subject1_code = db.StringField()
+    subject1_score = db.IntField()
+    subject2_code = db.StringField()
+    subject2_score = db.IntField()
+    subject3_code = db.StringField()
+    subject3_score = db.IntField()
+    subject4_code = db.StringField()
+    subject4_score = db.IntField()
 
-    subject4_score = db.Column(db.INTEGER)
-    net_score = db.Column(db.INTEGER, index=True)
-    total_score = db.Column(db.INTEGER, index=True)
+    net_score = db.IntField()
+    total_score = db.IntField()
+
+    def __str__(self):
+        return "kaohao: " + self.kaohao + " score: " + str(self.total_score)
+
+    @staticmethod
+    def get(kaohao):
+        users = User.objects(kaohao=kaohao)
+        return users[0] if len(users) > 0 else None
 
     def get_id(self):
         return self.kaohao
@@ -50,14 +67,9 @@ class User(db.Model):
         if temp_password == self.password:
             return self
         self.password = temp_password
-        db.session.add(self)
-        try:
-            db.session.commit()
-            return self
-        except IntegrityError:
-            db.session.rollback()
-            return None
-    
+        self.update(password=temp_password)
+        return self
+
     def validate_password(self, password):
         return self.password == self.hash_password(password)
 
@@ -83,10 +95,4 @@ class User(db.Model):
                     subject4_score = fourth_score,
                     net_score= second_score + third_score + fourth_score,
                     total_score = total_score)
-        db.session.add(user)
-        try:
-            db.session.commit()
-            return user
-        except IntegrityError:
-            db.session.rollback()
-            return None
+        user.save()
