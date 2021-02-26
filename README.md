@@ -18,7 +18,7 @@
 
 3. 2021-02-26 新增加mongo分支可使用Mongodb作为数据库
 
-## 2. 本地运行
+## 3. 本地运行
 1. 修改 app/__init__.py 中的数据库路径 即 app.config['SQLALCHEMY_DATABASE_URI']后面的值，如使用sqlite则应为'sqlite:///路径',如使用其他数据库请搜索修改
 
 2. 运行 pip install -r requirements/pip.txt 安装所有依赖库
@@ -27,7 +27,7 @@
 
 4. 最后运行 python manage.py run 即可
 
-## 3. 服务器部署
+## 4. 服务器部署
 1. 使用 pip3 install virtualenv 安装virtualenv, 如失败则运行 python -m pip install --upgrade pip 将 pip 升级到最新版本再尝试
 
 2. 进入项目文件夹, 运行 virtualenv venv 创建虚拟环境
@@ -40,5 +40,5 @@
 
 6. 运行 gunicorn --workers=5 -b 0.0.0.0:80 manage:app 即可启动站点, 具体参数请百度
 
-## 3. 声明
+## 5. 声明
     本代码仅供学习交流，用户使用所造成的不良后果与作者无关
