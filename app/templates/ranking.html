@@ -9,7 +9,7 @@
                 {% if is_total_ranking %}
                     {{ wtf.quick_pagination(pagination, "main_view.ranking_total", college=users[0].college, major=users[0].major) }}
                 {% else %}
-                    {{ wtf.qucik_paination(pagination, "main_view.ranking_net", college=users[0].college, major=users[0].major) }}
+                    {{ wtf.quick_pagination(pagination, "main_view.ranking_net", college=users[0].college, major=users[0].major) }}
                 {% endif %}
             </div>
             <table class="table">

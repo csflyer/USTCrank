@@ -9,7 +9,9 @@ class VerifyCodeField(StringField):
         addition = '<span id="code-change" class="input-group-addon">' \
                    '<img id="validate_img" src="/captcha">' \
                    '</span>'
-        return "<div class='input-group'>" + html + addition + "</div>"
+        # html 是一个Markup对象，直接拼接会将我们构造的html转义，从而无法显示图片
+        # 这里将其转成字符串再拼接即可
+        return "<div class='input-group'>" + str(html) + addition + "</div>"
 
 # 首页登录表单
 class LoginForm(FlaskForm):
