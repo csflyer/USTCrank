@@ -16,7 +16,6 @@ class CustomQuerySet(BaseQuerySet):
     def get_ranking(self, college, major, order_field, page, per_page):
         return self.filter(college=college, major=major).order_by("-" + order_field).paginate(page=page,
                                                                                               per_page=per_page)
-给i他
 # ORM 数据类
 class User(db.Document):
     __tablename__ = 'users'
