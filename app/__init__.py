@@ -12,16 +12,15 @@ login_manager.login_view = 'main_view.main'
 
 def create_app():
     app = Flask(__name__)
-    # mongo 数据库配置, 分别为表，ip地址，端口
+    # mongo db setting
     app.config['MONGODB_SETTINGS'] = {
         'db': 'users',
         'host': '127.0.0.1',
         'port': 27017
     }
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
-    # 表单 防CSRF
+    # anti-csrf form
     app.config['SECRET_KEY'] = 'USTC'
-    # 排名每页显示人数
+    # num of items in the ranking page
     app.config['USERS_PER_PAGE'] = 100
 
     db.init_app(app)
