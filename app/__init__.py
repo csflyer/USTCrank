@@ -12,7 +12,7 @@ login_manager.login_view = 'main_view.main'
 
 def create_app():
     app = Flask(__name__)
-    # mongo 数据库配置
+    # mongo 数据库配置, 分别为表，ip地址，端口
     app.config['MONGODB_SETTINGS'] = {
         'db': 'users',
         'host': '127.0.0.1',
