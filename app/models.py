@@ -80,7 +80,7 @@ class User(db.Document):
     def insert_new(info_list, password):
         (kaohao, college, major, first_name, first_score, second_name, second_score, third_name, third_score
          , fourth_name, fourth_score, total_score) = info_list
-        user =  User(kaohao=kaohao,
+        user = User(kaohao=kaohao,
                      password=User.hash_password(password),
                     college = college,
                     major=major,
@@ -95,3 +95,4 @@ class User(db.Document):
                     net_score= second_score + third_score + fourth_score,
                     total_score = total_score)
         user.save()
+        return user
