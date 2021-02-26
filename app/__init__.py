@@ -13,8 +13,7 @@ login_manager.login_view = 'main_view.main'
 def create_app():
     app = Flask(__name__)
     # 数据库地址
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ubuntu/USTCrank/scores.db'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///d:/temp.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ubuntu/USTCrank/scores.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'False'
     # 表单 防CSRF
     app.config['SECRET_KEY'] = 'USTC'
