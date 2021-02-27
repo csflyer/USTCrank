@@ -19,9 +19,12 @@
 3. 2021-02-26 新增加mongo分支可使用Mongodb作为数据库
 
 4. 2021-02-27 mongo分支支持创建围观账户(可登陆查看排名，但无法修改密码)
-    操作：进入源码目录和虚拟环境，运行 python manage.py shell, 调用create_super_user(kaohao, password)函数即可
-    注意: kaohao为准考证号，必须为15位长度；password 为密码，必须为6位; 建议kaohao使用为0或接近0的字符串
-    实例: create_super_user("000000000000000", "123456")
+
+* 操作：进入源码目录和虚拟环境，运行 python manage.py shell, 调用create_super_user(kaohao, password)函数即可
+
+* 注意: kaohao为准考证号，必须为15位长度；password 为密码，必须为6位; 建议kaohao使用为0或接近0的字符串
+
+* 实例: create_super_user("000000000000000", "123456")
 
 ## 3. 本地运行
 1. 安装mongodb, 并修改 app/__init__.py 中的数据库路径 即 app.config['MONGODB_SETTINGS'] 中的内容',如使用其他数据库请搜索修改
