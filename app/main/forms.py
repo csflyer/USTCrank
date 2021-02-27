@@ -1,6 +1,7 @@
 from wtforms.fields import StringField, SubmitField, PasswordField
-from wtforms.validators import Length, DataRequired
+from wtforms.validators import Length, DataRequired, ValidationError
 from flask_wtf import FlaskForm
+from flask_login import current_user
 
 # 封装验证码输入框
 class VerifyCodeField(StringField):
@@ -51,3 +52,7 @@ class SimpleResetPwForm(FlaskForm):
 
     password = PasswordField("新查询密码(6-20位)", validators=[DataRequired(), Length(6, 20)])
     submit = SubmitField("修改密码")
+
+    def validate_password(self, pwd):
+        if current_user.total_score == 0:
+            raise ValidationError("围观账户(总分为0)不支持修改密码")
