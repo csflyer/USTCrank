@@ -2,6 +2,7 @@ from wtforms.fields import StringField, SubmitField, PasswordField
 from wtforms.validators import Length, DataRequired
 from flask_wtf import FlaskForm
 
+
 # 封装验证码输入框
 class VerifyCodeField(StringField):
     def __call__(self, *args, **kwargs):
@@ -13,13 +14,15 @@ class VerifyCodeField(StringField):
         # 这里将其转成字符串再拼接即可
         return "<div class='input-group'>" + str(html) + addition + "</div>"
 
+
 # 首页登录表单
 class LoginForm(FlaskForm):
     title = "登陆"
 
     kaohao = StringField('准考证号(首次登陆请先点击上面的注册查分)', validators=[DataRequired(), Length(15, 15)])
-    password = PasswordField("查询密码", validators=[DataRequired(), Length(6, 10)])
+    password = PasswordField("查询密码", validators=[DataRequired(), Length(6, 20)])
     submit = SubmitField("登录查询")
+
 
 # 成绩查询表单
 class CJCXForm(FlaskForm):
