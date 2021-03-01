@@ -19,7 +19,7 @@ class LoginForm(FlaskForm):
     title = "登陆"
 
     kaohao = StringField('准考证号(首次登陆请先点击上面的注册查分)', validators=[DataRequired(), Length(15, 15)])
-    password = PasswordField("查询密码", validators=[DataRequired(), Length(6, 10)])
+    password = PasswordField("查询密码", validators=[DataRequired(), Length(6, 20)])
     submit = SubmitField("登录查询")
 
 # 成绩查询表单

@@ -20,23 +20,26 @@ class CustomQuerySet(BaseQuerySet):
 class User(db.Document):
     __tablename__ = 'users'
     # 注册上面自定义的查询方式
-    meta = {"queryset_class": CustomQuerySet}
+    meta = {"queryset_class": CustomQuerySet,
+            "index_background": True,
+            "indexes": ["college", "major", "total_score", "net_score"]
+            }
 
-    kaohao = db.StringField()
-    password = db.StringField()
-    college = db.StringField()
-    major = db.StringField()
-    subject1_code = db.StringField()
-    subject1_score = db.IntField()
-    subject2_code = db.StringField()
-    subject2_score = db.IntField()
-    subject3_code = db.StringField()
-    subject3_score = db.IntField()
-    subject4_code = db.StringField()
-    subject4_score = db.IntField()
+    kaohao = db.StringField(primary_key=True)
+    password = db.StringField(required=True)
+    college = db.StringField(required=True)
+    major = db.StringField(required=True)
+    subject1_code = db.StringField(required=True)
+    subject1_score = db.IntField(required=True)
+    subject2_code = db.StringField(required=True)
+    subject2_score = db.IntField(required=True)
+    subject3_code = db.StringField(required=True)
+    subject3_score = db.IntField(required=True)
+    subject4_code = db.StringField(required=True)
+    subject4_score = db.IntField(required=True)
 
-    net_score = db.IntField()
-    total_score = db.IntField()
+    net_score = db.IntField(required=True)
+    total_score = db.IntField(required=True)
 
     def __str__(self):
         return "kaohao: " + self.kaohao + " score: " + str(self.total_score)

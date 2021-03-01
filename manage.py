@@ -1,8 +1,8 @@
-import os
 from app.models import User
 from app import create_app, db
 from flask_script import Manager, Shell
 from werkzeug.exceptions import InternalServerError
+from prettytable import PrettyTable
 
 
 app = create_app()
@@ -18,6 +18,7 @@ def internal_server_error(e):
     return "Internal Server Error"
 
 
+# 创建围观账户
 def create_super_user(kaohao, pwd):
     if len(kaohao) != 15:
         print("考号必须为15位")
@@ -32,8 +33,59 @@ def create_super_user(kaohao, pwd):
                      0), pwd)
 
 
+# 查看后台是否有重复考号
+def print_dup():
+    s = set()
+    for user in User.objects:
+        if user.kaohao in s:
+            print(user.kaohao)
+        else:
+            s.add(user.kaohao)
+
+
+# 统计数据库内数据条数
+def print_len():
+    print("数据库总记录数: ", len(User.objects), "\n")
+
+
+# 统计各学院各专业报考人数
+def print_statistics():
+    print_len()
+
+    map = {}
+
+    for user in User.objects:
+        # 跳过围观账户
+        if user.total_score == 0:
+            continue
+        if user.college in map:
+            v = map[user.college]
+            v[0] += 1
+            if user.major in v[1]:
+                v[1][user.major] += 1
+            else:
+                v[1][user.major] = 1
+        else:
+            map[user.college] = [1, {user.major: 1}]
+
+    table = PrettyTable()
+    table.field_names = ["学院", "学院总人数", "专业", "专业总人数"]
+
+    for college, v in map.items():
+        clg_name_printed = False
+        for major, num in v[1].items():
+            if not clg_name_printed:
+                table.add_row([college, v[0], major, num])
+                clg_name_printed = True
+            else:
+                table.add_row(["", "", major, num])
+
+    print(table)
+
+
 def make_shell_context():
-    return dict(app=app, db=db, User=User, create_super_user=create_super_user)
+    return dict(app=app, db=db, User=User, create_super_user=create_super_user, print_len=print_len,
+                    print_dup=print_dup, print_sta=print_statistics)
 
 
 @manager.command
