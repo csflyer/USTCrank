@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_mongoengine import MongoEngine
@@ -18,8 +19,11 @@ def create_app():
         'host': '127.0.0.1',
         'port': 27017
     }
-    # anti-csrf form
-    app.config['SECRET_KEY'] = 'USTC'
+    # anti-csrf form and password hash
+    app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+    if app.config['SECRET_KEY'] is None:
+        raise ValueError(" you must set environment variable SECRET_KEY and remember it before it runs"
+                         "(don't change it after that)")
     # num of items in the ranking page
     app.config['USERS_PER_PAGE'] = 100
 
