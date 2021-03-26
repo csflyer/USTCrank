@@ -19,7 +19,7 @@ Flask-WTF==0.14.3
 idna==2.9
 importlib-metadata==3.7.0
 itsdangerous==1.1.0
-Jinja2==2.11.1
+Jinja2==2.11.3
 kombu==5.0.2
 MarkupSafe==1.1.1
 MongoAlchemy==0.19
