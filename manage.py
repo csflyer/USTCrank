@@ -3,7 +3,7 @@ from app import create_app, db
 from flask_script import Manager, Shell
 from werkzeug.exceptions import InternalServerError
 from prettytable import PrettyTable
-
+import csv
 
 app = create_app()
 manager = Manager(app)
@@ -81,6 +81,29 @@ def print_statistics():
                 table.add_row(["", "", major, num])
 
     print(table)
+
+
+# 导出数据到到csv文件
+def export():
+    with open("./scores.csv", "w", encoding="utf-8-sig", newline="") as file:
+        header = ["koahao", "college", "major", "subject1", "subject1_score", "subject2", "subject2_score",
+                    "subject3", "subject3_score", "subject4", "subject4_score", "net_score", "total_score"]
+        writer = csv.DictWriter(file, header)
+        writer.writeheader()
+        rows = [{"koahao" : user.kaohao,
+                "college": user.college,
+                "major": user.major,
+                "subject1": user.subject1_code,
+                "subject1_score": user.subject1_score,
+                "subject2": user.subject2_code,
+                "subject2_score": user.subject2_score,
+                "subject3": user.subject3_code,
+                "subject3_score": user.subject3_score,
+                "subject4": user.subject4_code,
+                "subject4_score": user.subject4_score,
+                "net_score": user.net_score,
+                "total_score": user.total_score} for user in User.objects]
+        writer.writerows(rows)
 
 
 def make_shell_context():

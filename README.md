@@ -18,7 +18,7 @@
 
 3. 2021-02-26 新增加mongo分支可使用 `Mongodb` 作为数据库
 
-4. 2021-02-27 mongo分支支持创建围观账户(可登陆查看排名，但无法修改密码)
+4. 2021-02-27 mongo分支支持创建围观账户(可登陆查看排名，但无法修改密码), 其他功能请查看 `manage.py`
 
 * 操作：进入源码目录和虚拟环境，运行 `python manage.py shell`, 调用`create_super_user(kaohao, password)` 函数即可
 
