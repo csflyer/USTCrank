@@ -34,7 +34,7 @@
 
 3. 安装依赖包 运行 `source venv/bin/activate` 激活虚拟环境(后续操作均在虚拟环境下进行)， 再运行 `pip install -r requirements/pip.txt` 安装所有依赖。设置好环境变量 `SECRET_KEY` 为一个私密的字符串，且以后不能改动。
 
-4. 如第一次运行或未创建数据库，修改 `app/__init__.py` 中的数据库路径，再运行 `python manage.py shell` 然后输入 `db.create_all()` 创建数据库
+4. 如第一次运行或未创建数据库，修改 `app/__init__.py` 中的数据库路径(极度不推荐正式环境使用sqlite)，再运行 `python manage.py shell` 然后输入 `db.create_all()` 创建数据库
 
 5. 使用 `gunicorn` 作为 web服务器， 使用 `pip install gunicorn` 安装 `gunicorn`
 
