@@ -13,9 +13,12 @@ def load_user(user_id):
 # 自定义的查询方式，用于输出排名与分页
 class CustomQuerySet(BaseQuerySet):
 
-    def get_ranking(self, college, major, order_field, page, per_page):
-        return self.filter(college=college, major=major).order_by("-" + order_field).paginate(page=page,
-                                                                                              per_page=per_page)
+    def get_ranking(self, college, major, subject1, subject2, subject3, subject4, order_field, page, per_page):
+        return self.filter(college=college, major=major, subject1_code=subject1, subject2_code=subject2,
+                           subject3_code=subject3, subject4_code=subject4).order_by("-" + order_field).paginate(
+            page=page, per_page=per_page)
+
+
 # ORM 数据类
 class User(db.Document):
     __tablename__ = 'users'
@@ -84,18 +87,18 @@ class User(db.Document):
         (kaohao, college, major, first_name, first_score, second_name, second_score, third_name, third_score
          , fourth_name, fourth_score, total_score) = info_list
         user = User(kaohao=kaohao,
-                     password=User.hash_password(password),
-                    college = college,
+                    password=User.hash_password(password),
+                    college=college,
                     major=major,
-                    subject1_code = first_name,
-                    subject1_score = first_score,
-                    subject2_code = second_name,
-                    subject2_score = second_score,
-                    subject3_code = third_name,
-                    subject3_score = third_score,
-                    subject4_code = fourth_name,
-                    subject4_score = fourth_score,
-                    net_score= second_score + third_score + fourth_score,
-                    total_score = total_score)
+                    subject1_code=first_name,
+                    subject1_score=first_score,
+                    subject2_code=second_name,
+                    subject2_score=second_score,
+                    subject3_code=third_name,
+                    subject3_score=third_score,
+                    subject4_code=fourth_name,
+                    subject4_score=fourth_score,
+                    net_score=second_score + third_score + fourth_score,
+                    total_score=total_score)
         user.save()
         return user

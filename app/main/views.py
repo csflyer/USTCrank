@@ -17,8 +17,9 @@ def decorator(func):
         print(func.__name__, 'start')
         result = func(*args, **kwargs)
         end = datetime.now()
-        print(func.__name__, "运行耗时:", end-start)
+        print(func.__name__, "运行耗时:", end - start)
         return result
+
     return wrap
 
 
@@ -32,6 +33,7 @@ def login_required(func):
         else:
             r = func(*args, **kwargs)
             return r
+
     return wrap
 
 
@@ -173,11 +175,12 @@ def get_validate_image():
 
 
 # 按总分排名
-@main_view.route('/ranking_total/<college>/<major>')
+@main_view.route('/ranking_total/<college>/<major>/<subject1>/<subject2>/<subject3>/<subject4>')
 @login_required
-def ranking_total(college, major):
+def ranking_total(college, major, subject1, subject2, subject3, subject4):
     page = request.args.get('page', 1, type=int)
-    pagination = User.objects.get_ranking(college, major, "total_score", page, current_app.config["USERS_PER_PAGE"])
+    pagination = User.objects.get_ranking(college, major, subject1, subject2, subject3, subject4, "total_score", page,
+                                          current_app.config["USERS_PER_PAGE"])
     users = pagination.items
     return render_template("ranking.html", users=users, pagination=pagination,
                            head='按总分排名', is_total_ranking=True,
@@ -185,11 +188,12 @@ def ranking_total(college, major):
 
 
 # 按除政治后总分排名
-@main_view.route('/ranking_net/<college>/<major>')
+@main_view.route('/ranking_net/<college>/<major>/<subject1>/<subject2>/<subject3>/<subject4>')
 @login_required
-def ranking_net(college, major):
+def ranking_net(college, major, subject1, subject2, subject3, subject4):
     page = request.args.get('page', 1, type=int)
-    pagination = User.objects.get_ranking(college, major, "net_score", page, current_app.config["USERS_PER_PAGE"])
+    pagination = User.objects.get_ranking(college, major, subject1, subject2, subject3, subject4, "net_score", page,
+                                          current_app.config["USERS_PER_PAGE"])
     users = pagination.items
     return render_template("ranking.html", users=users, pagination=pagination,
                            head='除去政治后成绩排名', is_total_ranking=False,

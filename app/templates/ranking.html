@@ -4,12 +4,14 @@
 {% block content %}
     {% if users %}
         <div class="col-md-8 col-md-offset-2" style="text-align: center">
-            <h3> {{ users[0].college }} {{ users[0].major }} 成绩排名</h3>
+            <h3> {{ users[0].college }} {{ users[0].major }}</h3>
+            <h3> {{ users[0].subject1_code }} {{ users[0].subject2_code }} {{ users[0].subject3_code }} {{ users[0].subject4_code }}</h3>
+            <h3>成绩排名</h3>
             <div>
                 {% if is_total_ranking %}
-                    {{ wtf.quick_pagination(pagination, "main_view.ranking_total", college=users[0].college, major=users[0].major) }}
+                    {{ wtf.quick_pagination(pagination, "main_view.ranking_total", college=users[0].college, major=users[0].major, subject1=users[0].subject1_code,subject2=users[0].subject2_code,subject3=users[0].subject3_code,subject4=users[0].subject4_code) }}
                 {% else %}
-                    {{ wtf.quick_pagination(pagination, "main_view.ranking_net", college=users[0].college, major=users[0].major) }}
+                    {{ wtf.quick_pagination(pagination, "main_view.ranking_net", college=users[0].college, major=users[0].major, subject1=users[0].subject1_code,subject2=users[0].subject2_code,subject3=users[0].subject3_code,subject4=users[0].subject4_code) }}
                 {% endif %}
             </div>
             <table class="table">

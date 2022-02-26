@@ -1,9 +1,9 @@
 {% extends "bootstrap/base.html" %}
 
 {% block title %}
-   {% if title  %}
+    {% if title %}
         {{ title }} - USTC 2020年考研初试成绩与排名查询
-   {% else %}
+    {% else %}
         USTC 2020年考研初试成绩与排名查询
     {% endif %}
 {% endblock %}
@@ -12,117 +12,125 @@
 {% block styles %}
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        #code-change{
+        #code-change {
             border: none;
             background-color: transparent;
             padding-right: 0px;
         }
-        #validate_img{
+
+        #validate_img {
             height: 34px;
             margin-top: -6px;
         }
-        #head{
+
+        #head {
             margin-top: 3%;
         }
-        body{
+
+        body {
             background: beige;
         }
-        .margin_left_10{
+
+        .margin_left_10 {
             margin-left: 10px;
         }
     </style>
 {% endblock %}
 
 {% block body %}
-<div id="head" style="text-align: center">
-    <h3 style="text-align: center">USTC 2020年考研初试成绩与排名查询</h3>
-    <p>1. 网站仅保存准考证号，所报学院专业及分数情况，请不要担心隐私泄露</p>
-    <p>2. 报考 USTC 的所有同学均可登录查分，查分后点击分数上方链接可查看本专业排名(下方为常用排名)，人数越多，数据越准确</p>
-    <p>3. <span style="color: red; font-size: 16px">本网站数据为USTC考生所有，未经书面许可，任何人不得以任何方式盗用转载相关数据<strong></strong></p>
-    <p>
+    <div id="head" style="text-align: center">
+        <h3 style="text-align: center">USTC 2020年考研初试成绩与排名查询</h3>
+        <p>1. 网站仅保存准考证号，所报学院专业及分数情况，请不要担心隐私泄露</p>
+        <p>2. 报考 USTC 的所有同学均可登录查分，查分后点击分数上方链接可查看本专业排名(下方为常用排名)，人数越多，数据越准确</p>
+        <p>3. <span style="color: red; font-size: 16px">本网站数据为USTC考生所有，未经书面许可，任何人不得以任何方式盗用转载相关数据<strong></strong></p>
+        <p>
         <span>4. 仅供学习交流使用，使用造成的一切不良后果由用户承担，与作者无关
         <a href="https://github.com/csflyer/USTCrank" target="_blank">项目Github地址</a></span></span>
-    </p>
-    <!-- 启动前注释下面的p标签 -->
-    <p><span style="color: red; font-size: 18px">本网站将于北京时间2021-03-28 12:00关闭，届时所有服务将不可用，望周知, 所有数据将转存到 github<strong></strong></p>
-    {% if current_user.is_authenticated %}
-<div class="col-md-6 col-md-offset-3">
-    <table class="table" style="margin-top: 10px; margin-bottom: 10px">
-        <tr>
-            <td>总分排名</td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_total', college='225软件学院', major='085400电子信息')}}">软件学院专硕</a>
-            </td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_total', college='225软件学院', major='083500软件工程')}}">软件学院学硕</a>
-            </td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_total', college='215计算机科学与技术学院', major='085400电子信息')}}">计院专硕</a>
-            </td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_total', college='215计算机科学与技术学院', major='081200计算机科学与技术')}}">计院学硕</a>
-            </td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_total', college='218先进技术研究院', major='085400电子信息')}}">先进院专硕</a></td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_total', college='168研究生院科学岛分院', major='085400电子信息')}}">科学岛专硕</a>
-            </td>
-        </tr>
-        <tr>
-            <td>净分排名</td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_net', college='225软件学院', major='085400电子信息')}}">软件学院专硕</a>
-            </td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_net', college='225软件学院', major='083500软件工程')}}">软件学院学硕</a>
-            </td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_net', college='215计算机科学与技术学院', major='085400电子信息')}}">计院专硕</a>
-            </td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_net', college='215计算机科学与技术学院', major='081200计算机科学与技术')}}">计院学硕</a>
-            </td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_net', college='218先进技术研究院', major='085400电子信息')}}">先进院专硕</a></td>
-            <td>
-                <a href="{{ url_for('main_view.ranking_net', college='168研究生院科学岛分院', major='085400电子信息')}}">科学岛专硕</a>
-            </td>
-            </td>
-        </tr>
-    </table>
-</div>
-    {% endif %}
-    <div class="col-md-6 col-md-offset-3">
-        <p style="margin-top: 0px; font-size: 15px;text-align: center">
-            <a href="/">首页</a>
-            {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main_view.score')}}" class="margin_left_10">个人成绩</a>
-            {% else %}
-                <a href="{{ url_for('main_view.cjcx')}}" class="margin_left_10">注册查分</a>
-            {% endif %}
-            <a href="{{ url_for('main_view.reset_password') }}" class="margin_left_10">修改查询密码</a>
-            <a href="{{ url_for('main_view.logout') }}" class="margin_left_10">退出登录</a>
-    </p></div>
-</div>
-<div>
-    <div style="margin-top: 10px;" class="row col-md-2 col-md-offset-5">
-    {% with messages = get_flashed_messages(with_categories = True) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                {% if category != "info" %}
-                    <div class="alert alert-danger">
-                        {{ message }}
-                    </div>
-                {% else %}
-                    <div class="alert alert-info">
-                        {{ message }}
-                    </div>
-                {% endif %}
-            {% endfor %}
+        </p>
+        <!-- 启动前注释下面的p标签 -->
+        <p><span
+                style="color: red; font-size: 18px">本网站将于北京时间2021-03-28 12:00关闭，届时所有服务将不可用，望周知, 所有数据将转存到 github<strong></strong>
+        </p>
+        {% if current_user.is_authenticated %}
+            <div class="col-md-6 col-md-offset-3">
+                <table class="table" style="margin-top: 10px; margin-bottom: 10px">
+                    <tr>
+                        <td>总分排名</td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_total', college='225软件学院', major='085400电子信息', subject1= '101思想政治理论', subject2='204英语（二）', subject3='302数学（二）', subject4='408计算机学科专业基础') }}">软件学院专硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_total', college='225软件学院', major='083500软件工程', subject1= '101思想政治理论', subject2='201英语（一）', subject3='301数学（一）', subject4='408计算机学科专业基础') }}">软件学院学硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_total', college='215计算机科学与技术学院', major='085400电子信息', subject1= '101思想政治理论', subject2='201英语（一）', subject3='301数学（一）', subject4='408计算机学科专业基础') }}">计院专硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_total', college='215计算机科学与技术学院', major='081200计算机科学与技术', subject1= '101思想政治理论', subject2='201英语（一）', subject3='301数学（一）', subject4='408计算机学科专业基础') }}">计院学硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_total', college='218先进技术研究院', major='085400电子信息', subject1= '101思想政治理论', subject2='204英语（二）', subject3='302数学（二）', subject4='408计算机学科专业基础') }}">先进院专硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_total', college='168研究生院科学岛分院', major='085400电子信息', subject1= '101思想政治理论', subject2='204英语（二）', subject3='302数学（二）', subject4='408计算机学科专业基础') }}">科学岛专硕</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>净分排名</td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_net', college='225软件学院', major='085400电子信息', subject1= '101思想政治理论', subject2='204英语（二）', subject3='302数学（二）', subject4='408计算机学科专业基础') }}">软件学院专硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_net', college='225软件学院', major='083500软件工程', subject1= '101思想政治理论', subject2='201英语（一）', subject3='301数学（一）', subject4='408计算机学科专业基础') }}">软件学院学硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_net', college='215计算机科学与技术学院', major='085400电子信息', subject1= '101思想政治理论', subject2='201英语（一）', subject3='301数学（一）', subject4='408计算机学科专业基础') }}">计院专硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_net', college='215计算机科学与技术学院', major='081200计算机科学与技术', subject1= '101思想政治理论', subject2='201英语（一）', subject3='301数学（一）', subject4='408计算机学科专业基础') }}">计院学硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_net', college='218先进技术研究院', major='085400电子信息', subject1= '101思想政治理论', subject2='204英语（二）', subject3='302数学（二）', subject4='408计算机学科专业基础') }}">先进院专硕</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('main_view.ranking_net', college='168研究生院科学岛分院', major='085400电子信息', subject1= '101思想政治理论', subject2='204英语（二）', subject3='302数学（二）', subject4='408计算机学科专业基础') }}">科学岛专硕</a>
+                        </td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         {% endif %}
-    {% endwith %}
+        <div class="col-md-6 col-md-offset-3">
+            <p style="margin-top: 0px; font-size: 15px;text-align: center">
+                <a href="/">首页</a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main_view.score') }}" class="margin_left_10">个人成绩</a>
+                {% else %}
+                    <a href="{{ url_for('main_view.cjcx') }}" class="margin_left_10">注册查分</a>
+                {% endif %}
+                <a href="{{ url_for('main_view.reset_password') }}" class="margin_left_10">修改查询密码</a>
+                <a href="{{ url_for('main_view.logout') }}" class="margin_left_10">退出登录</a>
+            </p></div>
     </div>
-</div>
+    <div>
+        <div style="margin-top: 10px;" class="row col-md-2 col-md-offset-5">
+            {% with messages = get_flashed_messages(with_categories = True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category != "info" %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
     {% block content %}
     {% endblock %}
 {% endblock %}
