@@ -15,7 +15,7 @@ class CustomQuerySet(BaseQuerySet):
 
     def get_ranking(self, college, major, subject1, subject2, subject3, subject4, order_field, page, per_page):
         return self.filter(college=college, major=major, subject1_code=subject1, subject2_code=subject2,
-                           subject3_code=subject3, subject4_code=subject4).order_by("-" + order_field).paginate(
+                           subject3_code=subject3, subject4_code=subject4).order_by("-" + order_field, "+kaohao").paginate(
             page=page, per_page=per_page)
 
 
