@@ -1,7 +1,7 @@
 amqp==5.0.5
 beautifulsoup4==4.8.2
 billiard==3.6.3.0
-certifi==2019.11.28
+certifi==2022.12.7
 chardet==3.0.4
 Click==7.0
 click-didyoumean==0.0.3
