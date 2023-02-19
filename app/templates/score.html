@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    <div style="text-align: center; margin-top: -10px; margin-bottom: 10px;" class="col-md-4 col-md-offset-4">
-            <strong><a style="font-size: 16px" href="{{ url_for('main_view.ranking_total', college=current_user.college, major=current_user.major)}}">查看所报专业排名(按总分)</a>
-            <a  style="margin-left: 10px; font-size: 16px" href="{{ url_for('main_view.ranking_net', college=current_user.college, major=current_user.major)}}">查看所报专业排名(按除政治后总分)</a></strong>
-    </div>
+<div style="text-align: center; margin-top: -10px; margin-bottom: 10px;" class="col-md-4 col-md-offset-4">
+    <strong><a style="font-size: 16px"
+            href="{{ url_for('main_view.ranking_total', college=current_user.college,major=current_user.major,subject1=current_user.subject1_code,subject2=current_user.subject2_code,subject3=current_user.subject3_code,subject4=current_user.subject4_code)}}">查看所报专业排名(按总分)</a>
+        <a style="margin-left: 10px; font-size: 16px"
+            href="{{ url_for('main_view.ranking_net', college=current_user.college, major=current_user.major,subject1=current_user.subject1_code,subject2=current_user.subject2_code,subject3=current_user.subject3_code,subject4=current_user.subject4_code)}}">查看所报专业排名(按除政治后总分)</a></strong>
+</div>
 <div class="col-md-8 col-md-offset-2">
     <table class="table">
         <tr>
