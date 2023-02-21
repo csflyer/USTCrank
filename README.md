@@ -48,7 +48,7 @@
 
 5. 使用 `gunicorn` 作为 web服务器， 使用 `pip install gunicorn` 安装 `gunicorn`
 
-6. 运行 `gunicorn --workers=5 -b 0.0.0.0:80 manage:app` 即可启动站点, 具体参数请百度
+6. 运行 `gunicorn --workers=5 -b 0.0.0.0:80 manage:app` 即可启动站点, 具体参数请百度（注，例中的默认参数性能很差，不能直接用于实际应用，请查询如何设置worker_class等参数提升性能）
 
 ## 5. 声明
     本代码仅供学习交流，用户使用所造成的不良后果与作者无关
